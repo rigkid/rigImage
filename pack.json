@@ -1,0 +1,13 @@
+{
+  "name": "rigImage",
+  "url": "https://github.com/rigkid/rigImage.git",
+  "ref": "main",
+  "version": "0.1.0",
+  "author": "Rigkid",
+  "license": "MIT Rigkid Contributors",
+  "description": "Raster decode + GLES upload. Path POD stays CAssetRef in rigComponent.",
+  "dependencies": [],
+  "include_paths": [
+    "src"
+  ]
+}

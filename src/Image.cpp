@@ -1,17 +1,20 @@
 #include "Image.h"
 
+#include "rendering/U_gladGlfw.h"
 #include <algorithm>
 #include <cstring>
 #include <filesystem>
 #include <spdlog/spdlog.h>
 #include "core/util/AppPaths.h"
-#include "rendering/U_gladGlfw.h"
 
 #define STBI_ONLY_PNG
 #define STBI_ONLY_JPEG
 #define STBI_ONLY_BMP
 #define STBI_ONLY_GIF
 #define STBI_ONLY_TGA
+// Internal linkage: rigPlotFinders bundles its own stb_image; both packs can
+// link into one app without symbol collisions.
+#define STB_IMAGE_STATIC
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
 
@@ -32,12 +35,12 @@ void boxDownsample(const unsigned char* src, int sw, int sh, unsigned char* dst,
 		const int sy = y * sh / dh;
 		for (int x = 0; x < dw; ++x) {
 			const int sx = x * sw / dw;
-			const unsigned char* p = src + (static_cast<size_t>(sy) * static_cast<size_t>(sw) +
-											static_cast<size_t>(sx)) *
-											   4;
-			unsigned char* q = dst + (static_cast<size_t>(y) * static_cast<size_t>(dw) +
-									  static_cast<size_t>(x)) *
-										 4;
+			const unsigned char* p =
+				src +
+				(static_cast<size_t>(sy) * static_cast<size_t>(sw) + static_cast<size_t>(sx)) * 4;
+			unsigned char* q =
+				dst +
+				(static_cast<size_t>(y) * static_cast<size_t>(dw) + static_cast<size_t>(x)) * 4;
 			std::memcpy(q, p, 4);
 		}
 	}

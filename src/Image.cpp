@@ -106,6 +106,16 @@ std::string resolvePath(const std::string& href, const std::string& basePath) {
 	return {};
 }
 
+bool size(const std::string& path, int& w, int& h) {
+	w = 0;
+	h = 0;
+	int comp = 0;
+	if (!stbi_info(path.c_str(), &w, &h, &comp) || w < 1 || h < 1) {
+		return false;
+	}
+	return true;
+}
+
 bool load(const std::string& path, pixel::Raster& out, int maxEdge) {
 	const auto role = out.role;
 	out = {};

@@ -27,6 +27,8 @@ constexpr int kDefaultMaxEdge = 2048;
 /// Empty when the href is a URL or no file exists.
 std::string resolvePath(const std::string& href, const std::string& basePath = {});
 
+/** @brief Pixel width/height without a full decode. False when the file is not an image. */
+bool size(const std::string& path, int& w, int& h);
 bool load(const std::string& path, pixel::Raster& out, int maxEdge = kDefaultMaxEdge);
 bool loadMemory(const void* data, int bytes, pixel::Raster& out, int maxEdge = kDefaultMaxEdge);
 bool upload(const pixel::Raster& raster, GpuTexture& out);

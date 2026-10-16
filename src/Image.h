@@ -7,8 +7,8 @@
  * the GL context is alive. The long edge is capped before upload so Pi memory stays sane.
  */
 
-#include "Raster.h"
 #include <string>
+#include "Raster.h"
 
 namespace rig {
 namespace image {

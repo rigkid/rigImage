@@ -7,6 +7,8 @@ add_library(${PACK_NAME} STATIC
 	src/Image.cpp
 	src/Image.h
 	src/Raster.h
+	src/RasterPaint.cpp
+	src/RasterPaint.h
 )
 target_link_libraries(${PACK_NAME} PUBLIC rigkit)
 target_include_directories(${PACK_NAME} PUBLIC

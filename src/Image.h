@@ -35,5 +35,8 @@ bool upload(const pixel::Raster& raster, GpuTexture& out);
 bool loadTexture(const std::string& path, GpuTexture& out, int maxEdge = kDefaultMaxEdge);
 void destroy(GpuTexture& tex);
 
+/** @brief Write @p raster as PNG. Parent folder must exist. */
+bool savePng(const std::string& path, const pixel::Raster& raster);
+
 } // namespace image
 } // namespace rig

@@ -17,6 +17,9 @@
 #define STB_IMAGE_STATIC
 #define STB_IMAGE_IMPLEMENTATION
 #include "stb_image.h"
+#define STB_IMAGE_WRITE_STATIC
+#define STB_IMAGE_WRITE_IMPLEMENTATION
+#include "stb_image_write.h"
 
 namespace rig {
 namespace image {
@@ -187,6 +190,20 @@ void destroy(GpuTexture& tex) {
 	}
 	tex.w = 0;
 	tex.h = 0;
+}
+
+bool savePng(const std::string& path, const pixel::Raster& raster) {
+	if (raster.width < 1 || raster.height < 1 ||
+		raster.rgba.size() <
+			static_cast<size_t>(raster.width) * static_cast<size_t>(raster.height) * 4) {
+		return false;
+	}
+	const int ok = stbi_write_png(path.c_str(), raster.width, raster.height, 4, raster.rgba.data(),
+								  raster.width * 4);
+	if (!ok) {
+		spdlog::warn("[rigImage] PNG write failed: {}", path);
+	}
+	return ok != 0;
 }
 
 } // namespace image

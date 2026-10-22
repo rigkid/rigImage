@@ -12,6 +12,7 @@
 #define STBI_ONLY_BMP
 #define STBI_ONLY_GIF
 #define STBI_ONLY_TGA
+#define STBI_ONLY_HDR
 // Internal linkage: rigPlotFinders bundles its own stb_image; both packs can
 // link into one app without symbol collisions.
 #define STB_IMAGE_STATIC
@@ -128,6 +129,74 @@ bool load(const std::string& path, pixel::Raster& out, int maxEdge) {
 	int comp = 0;
 	unsigned char* pixels = stbi_load(path.c_str(), &w, &h, &comp, 4);
 	return rasterFromPixels(pixels, w, h, out, maxEdge, path.c_str());
+}
+
+bool loadHdr(const std::string& path, FloatRaster& out, int maxEdge) {
+	out = {};
+	int w = 0;
+	int h = 0;
+	int comp = 0;
+	float* pixels = stbi_loadf(path.c_str(), &w, &h, &comp, 4);
+	if (!pixels || w < 1 || h < 1) {
+		if (pixels) {
+			stbi_image_free(pixels);
+		}
+		spdlog::warn("[rigImage] HDR load failed: {} ({})", path,
+					 stbi_failure_reason() ? stbi_failure_reason() : "unknown");
+		return false;
+	}
+
+	int dw = w;
+	int dh = h;
+	if (maxEdge > 0 && std::max(w, h) > maxEdge) {
+		if (w >= h) {
+			dw = maxEdge;
+			dh = std::max(1, h * maxEdge / w);
+		} else {
+			dh = maxEdge;
+			dw = std::max(1, w * maxEdge / h);
+		}
+	}
+
+	out.width = dw;
+	out.height = dh;
+	out.rgba.resize(static_cast<size_t>(dw) * static_cast<size_t>(dh) * 4);
+	if (dw == w && dh == h) {
+		std::memcpy(out.rgba.data(), pixels, out.rgba.size() * sizeof(float));
+	} else {
+		for (int y = 0; y < dh; ++y) {
+			const int y0 = y * h / dh;
+			const int y1 = std::min(h, (y + 1) * h / dh);
+			for (int x = 0; x < dw; ++x) {
+				const int x0 = x * w / dw;
+				const int x1 = std::min(w, (x + 1) * w / dw);
+				float acc[4] = {0.f, 0.f, 0.f, 0.f};
+				int n = 0;
+				for (int sy = y0; sy < y1; ++sy) {
+					for (int sx = x0; sx < x1; ++sx) {
+						const float* p = pixels + (static_cast<size_t>(sy) * static_cast<size_t>(w) +
+												   static_cast<size_t>(sx)) *
+													  4;
+						acc[0] += p[0];
+						acc[1] += p[1];
+						acc[2] += p[2];
+						acc[3] += p[3];
+						++n;
+					}
+				}
+				float* d = out.rgba.data() + (static_cast<size_t>(y) * static_cast<size_t>(dw) +
+											  static_cast<size_t>(x)) *
+												 4;
+				const float inv = n > 0 ? 1.f / static_cast<float>(n) : 0.f;
+				d[0] = acc[0] * inv;
+				d[1] = acc[1] * inv;
+				d[2] = acc[2] * inv;
+				d[3] = acc[3] * inv;
+			}
+		}
+	}
+	stbi_image_free(pixels);
+	return true;
 }
 
 bool loadMemory(const void* data, int bytes, pixel::Raster& out, int maxEdge) {

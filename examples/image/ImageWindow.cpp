@@ -3,7 +3,7 @@
 #include <imgui.h>
 #include "app.h"
 
-ImageWindow::ImageWindow(ImageApp* app) : rigkit::IWindow("Image", 0), m_app(app) {}
+ImageWindow::ImageWindow(ImageApp* app) : rigkit::ImGuiPanel("Image", 0), m_app(app) {}
 
 void ImageWindow::renderContents() {
 	if (!m_app) {

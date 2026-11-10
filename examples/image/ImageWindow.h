@@ -1,10 +1,10 @@
 #pragma once
 
-#include "packs/rigImGui/src/IWindow.h"
+#include "packs/rigImGui/src/ImGuiPanel.h"
 
 class ImageApp;
 
-class ImageWindow : public rigkit::IWindow {
+class ImageWindow : public rigkit::ImGuiPanel {
   public:
 	explicit ImageWindow(ImageApp* app);
 

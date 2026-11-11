@@ -1,9 +1,9 @@
 #include "app.h"
 
+#include "rendering/U_gladGlfw.h"
 #include <cstdlib>
 #include <iostream>
 #include <spdlog/spdlog.h>
-#include "ImageWindow.h"
 #include "core/RigKitEngine.h"
 #include "core/pack/MPack.h"
 #include "core/util/AppPaths.h"
@@ -13,7 +13,7 @@
 #include "packs/rigImGui/src/rigImGui.h"
 #include "packs/rigProject/src/rigProject.h"
 #include "packs/rigSystems/src/rigSystems.h"
-#include "rendering/U_gladGlfw.h"
+#include "ImageWindow.h"
 #include "rigImage.h"
 
 ImageApp::ImageApp() {

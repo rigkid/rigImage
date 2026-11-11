@@ -15,13 +15,7 @@ namespace pixel {
  * @brief `rig.pixel.raster` role. Schema literals: working, output,
  * layerPixels, mask, composite.
  */
-enum class RasterRole {
-	Working,
-	Output,
-	LayerPixels,
-	Mask,
-	Composite
-};
+enum class RasterRole { Working, Output, LayerPixels, Mask, Composite };
 
 /**
  * @brief CPU RGBA buffer. Speaks `rig.pixel.raster`.

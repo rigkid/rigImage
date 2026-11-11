@@ -1,7 +1,7 @@
 #pragma once
 
-#include "Image.h"
 #include "core/pack/IPack.h"
+#include "Image.h"
 
 namespace rigkit {
 

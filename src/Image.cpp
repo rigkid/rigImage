@@ -174,9 +174,10 @@ bool loadHdr(const std::string& path, FloatRaster& out, int maxEdge) {
 				int n = 0;
 				for (int sy = y0; sy < y1; ++sy) {
 					for (int sx = x0; sx < x1; ++sx) {
-						const float* p = pixels + (static_cast<size_t>(sy) * static_cast<size_t>(w) +
-												   static_cast<size_t>(sx)) *
-													  4;
+						const float* p =
+							pixels + (static_cast<size_t>(sy) * static_cast<size_t>(w) +
+									  static_cast<size_t>(sx)) *
+										 4;
 						acc[0] += p[0];
 						acc[1] += p[1];
 						acc[2] += p[2];
@@ -184,9 +185,9 @@ bool loadHdr(const std::string& path, FloatRaster& out, int maxEdge) {
 						++n;
 					}
 				}
-				float* d = out.rgba.data() + (static_cast<size_t>(y) * static_cast<size_t>(dw) +
-											  static_cast<size_t>(x)) *
-												 4;
+				float* d =
+					out.rgba.data() +
+					(static_cast<size_t>(y) * static_cast<size_t>(dw) + static_cast<size_t>(x)) * 4;
 				const float inv = n > 0 ? 1.f / static_cast<float>(n) : 0.f;
 				d[0] = acc[0] * inv;
 				d[1] = acc[1] * inv;

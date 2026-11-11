@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Image.h"
 #include "core/IApp.h"
 #include "core/util/CommandLineArgs.h"
+#include "Image.h"
 
 class ImageApp : public rigkit::IApp {
   public:

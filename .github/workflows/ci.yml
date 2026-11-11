@@ -85,4 +85,4 @@ jobs:
 
       - name: image smoke
         working-directory: host
-        run: "./packs/${PACK}/examples/${HERO}/build/bin/${HERO}/${HERO} --smoke-image"
+        run: "./packs/${PACK}/examples/${HERO}/build/bin/${HERO} --smoke-image"

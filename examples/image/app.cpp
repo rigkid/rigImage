@@ -68,13 +68,14 @@ void ImageApp::setupUi() {
 		spdlog::warn("image: no IMui — rigImGui failed to attach");
 		return;
 	}
-	auto* wm = ui->getWindowManager();
+	auto* mui = dynamic_cast<rigkit::Mui*>(ui);
+	auto* wm = mui ? mui->getWindowManager() : nullptr;
 	if (!wm) {
 		return;
 	}
 	wm->createWindow<ImageWindow>(this);
 	wm->showWindow("Image");
-	if (auto* mui = dynamic_cast<rigkit::Mui*>(ui)) {
+	if (mui) {
 		mui->setFirstRunHostDockLayout({"Image"});
 	}
 }

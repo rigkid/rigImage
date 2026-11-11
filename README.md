@@ -1,7 +1,5 @@
 # rigImage
 
-![preview](examples/image/img/preview.png)
-
 Raster decode + GLES upload for **RigKit**. Vendors [stb_image](https://github.com/nothings/stb)
 (PNG / JPEG / GIF / BMP / TGA). Path identity stays on `CAssetRef` in
 **rigComponent** — this pack does not own document POD.

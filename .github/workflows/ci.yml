@@ -86,4 +86,4 @@ jobs:
 
       - name: image smoke
         working-directory: host
-        run: xvfb-run -a "./packs/${PACK}/examples/${HERO}/build/bin/${HERO} --smoke-image"
+        run: xvfb-run -a ./packs/${PACK}/examples/${HERO}/build/bin/${HERO} --smoke-image

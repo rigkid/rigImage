@@ -69,7 +69,8 @@ jobs:
           sudo apt-get install -y build-essential cmake ninja-build pkg-config \
             libx11-dev libxrandr-dev libxinerama-dev libxcursor-dev libxi-dev \
             libgl1-mesa-dev \
-            libwayland-dev libwayland-bin libxkbcommon-dev
+            libwayland-dev libwayland-bin libxkbcommon-dev \
+            xvfb
 
       - name: Configure hero
         working-directory: host
@@ -85,4 +86,4 @@ jobs:
 
       - name: image smoke
         working-directory: host
-        run: "./packs/${PACK}/examples/${HERO}/build/bin/${HERO} --smoke-image"
+        run: xvfb-run -a "./packs/${PACK}/examples/${HERO}/build/bin/${HERO} --smoke-image"
